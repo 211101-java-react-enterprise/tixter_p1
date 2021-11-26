@@ -10,6 +10,13 @@ public class Users {
     private int type_id;
     private int role_id;
 
+    public Users(String firstname,String lastname,String email,String password,int age){
+        this.firstname=firstname;
+        this.lastname=lastname;
+        this.email=email;
+        this.password=password;
+        this.age=age;
+    }
 
     //___________________________Getter Section_________________________________
     public String getUser_id() {return user_id;}
