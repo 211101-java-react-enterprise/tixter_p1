@@ -5,12 +5,12 @@ import com.revature.tixter.models.Users;
 public class userService {
     private Users sessionUser;
 
-
+    public userService(){}
     public userService(Users sessionUser) {
         this.sessionUser = sessionUser;
     }
 
-    //Check if registration information valid in the term of format
+    //Check if registration information valid in the aspect of format
     public boolean isUserValid(Users TempUser) {
         if (TempUser == null) return false;
         if (TempUser.getFirstname() == null || TempUser.getFirstname().trim().equals("")) return false;
