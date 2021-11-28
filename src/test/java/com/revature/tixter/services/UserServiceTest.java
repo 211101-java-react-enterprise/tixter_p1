@@ -7,11 +7,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class userServiceTest {
-    userService sut;
+    UserService sut;
 
     @Before
     public void testStart(){
-        sut=new userService();
+        sut=new UserService();
     }
 
     @After
