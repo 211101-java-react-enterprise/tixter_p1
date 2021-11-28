@@ -18,6 +18,10 @@ public class Users {
         this.age=age;
     }
 
+    public Users() {
+        super();
+    }
+
     //___________________________Getter Section_________________________________
     public String getUser_id() {return user_id;}
     public String getFirstname() {return firstname;}
