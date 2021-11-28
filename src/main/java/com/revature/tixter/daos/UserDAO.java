@@ -5,11 +5,41 @@ import com.revature.tixter.util.ConnectionFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
 public class UserDAO implements CrudDAO {
+
+    public Users findByEmail(String email) {
+
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+            String sql = "select * from tixter_users where email = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, email);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                Users user = new Users();
+                user.setUser_id(rs.getString("user_id"));
+                user.setFirstname(rs.getString("firstname"));
+                user.setLastname(rs.getString("lastname"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setAge(rs.getInt("user_age"));
+                user.setType_id(rs.getInt("type_id"));
+                user.setRole_id(rs.getInt("role_id"));
+                return user;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
 
     public Users save(Users newUser) {
 

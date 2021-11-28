@@ -2,6 +2,7 @@ package com.revature.tixter.services;
 
 import com.revature.tixter.daos.UserDAO;
 import com.revature.tixter.exceptions.InvalidRequestException;
+import com.revature.tixter.exceptions.ResourcePersistenceException;
 import com.revature.tixter.models.Users;
 
 public class UserService {
@@ -29,7 +30,12 @@ public class UserService {
 
         //first Check if Basic User Info Valid
         if (!isUserValid(TempUser))throw new InvalidRequestException("Invalid user data provided!");
-        //TODO: add validation logic to check if Email occupied
+        //Check if Email Occupied
+        if (userDAO.findByEmail(TempUser.getEmail())!=null) {
+            String msg = "Input Email Occupied, Please Enter Another Email Address";
+            throw new ResourcePersistenceException(msg);
+        }
+        //Write new User Info to database
         Users newUser=userDAO.save(TempUser);
 
         return true;
