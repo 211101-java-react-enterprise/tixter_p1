@@ -10,6 +10,8 @@ public class Users {
     private int type_id;
     private int role_id;
 
+    public Users(){}
+
     public Users(String firstname,String lastname,String email,String password,int age){
         this.firstname=firstname;
         this.lastname=lastname;

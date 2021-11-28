@@ -1,13 +1,16 @@
 package com.revature.tixter.services;
 
+import com.revature.tixter.daos.UserDAO;
+import com.revature.tixter.exceptions.InvalidRequestException;
 import com.revature.tixter.models.Users;
 
-public class userService {
+public class UserService {
     private Users sessionUser;
+    private UserDAO userDAO;
 
-    public userService(){}
-    public userService(Users sessionUser) {
-        this.sessionUser = sessionUser;
+    public UserService(){}
+    public UserService(UserDAO userDAO) {
+        this.userDAO=userDAO;
     }
 
     //Check if registration information valid in the aspect of format
@@ -21,5 +24,15 @@ public class userService {
         return true;
     }
 
+    //Register New Users
+    public boolean register(Users TempUser) {
+
+        //first Check if Basic User Info Valid
+        if (!isUserValid(TempUser))throw new InvalidRequestException("Invalid user data provided!");
+        //TODO: add validation logic to check if Email occupied
+        Users newUser=userDAO.save(TempUser);
+
+        return true;
+    }
 
 }
