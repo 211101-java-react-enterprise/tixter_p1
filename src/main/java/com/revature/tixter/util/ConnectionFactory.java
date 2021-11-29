@@ -25,7 +25,7 @@ public class ConnectionFactory {
     private ConnectionFactory() {
         try {
             ClassLoader loader = Thread.currentThread().getContextClassLoader();
-            props.load(loader.getResourceAsStream("mydb.properties"));
+            props.load(loader.getResourceAsStream("db.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
