@@ -1,7 +1,7 @@
 #git ignore file
 
 # IDE-specific files
-.idea/
+#.idea/
 *.iml
 
 # Compiled/Packaged files and directories
