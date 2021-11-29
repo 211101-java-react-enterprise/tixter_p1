@@ -3,6 +3,7 @@ package com.revature.tixter.web.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.tixter.daos.UserDAO;
 import com.revature.tixter.services.UserService;
+import com.revature.tixter.web.servlets.LoginServlet;
 import com.revature.tixter.web.servlets.RegisterServlet;
 
 
@@ -22,9 +23,11 @@ public class ContextLoaderListener implements ServletContextListener {
         UserService userService = new UserService(userDAO);
 
         RegisterServlet userServlet = new RegisterServlet(userService, objectMapper);
+        LoginServlet loginServlet = new LoginServlet(userService, objectMapper);
 
         ServletContext context=sce.getServletContext();
         context.addServlet("RegisterServlet",userServlet).addMapping("/register");
+        context.addServlet("LoginServlet",loginServlet).addMapping("/login");
 
         System.out.println("Ready To Go");
     }

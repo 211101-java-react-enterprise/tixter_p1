@@ -1,6 +1,7 @@
 package com.revature.tixter.services;
 
 import com.revature.tixter.daos.UserDAO;
+import com.revature.tixter.exceptions.AuthenticationException;
 import com.revature.tixter.exceptions.InvalidRequestException;
 import com.revature.tixter.exceptions.ResourcePersistenceException;
 import com.revature.tixter.models.Users;
@@ -41,4 +42,19 @@ public class UserService {
         return true;
     }
 
+    public Users authenticateUser(String email, String password) {
+
+        if (email == null || email.trim().equals("") || password == null || password.trim().equals("")) {
+            throw new InvalidRequestException("Invalid credential values provided!");
+        }
+
+        Users authenticatedUser = userDAO.findUserByEmailAndPassword(email, password);
+
+        if (authenticatedUser == null) {
+            throw new AuthenticationException();
+        }
+
+        return authenticatedUser;
+
+    }
 }
