@@ -19,11 +19,11 @@ public class TicketDAO implements CrudDAO {
 
             ticket.setTicket_id(UUID.randomUUID().toString());
 
-            String sql = "insert into flashcards (ticket_id, publisher, name) values ( ?, ?, ?)";
+            String sql = "insert into tickets (ticket_id, publisher_id, ticket_name) values ( ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, ticket.getTicket_id());
-            pstmt.setString(4, ticket.getPublisher().getUser_id());
-            pstmt.setString(2, ticket.getName());
+            pstmt.setString(2, ticket.getPublisher().getUser_id());
+            pstmt.setString(3, ticket.getName());
 
             int rowsInserted = pstmt.executeUpdate();
 
