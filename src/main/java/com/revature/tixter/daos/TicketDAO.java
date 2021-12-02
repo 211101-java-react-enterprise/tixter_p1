@@ -1,12 +1,9 @@
 package com.revature.tixter.daos;
 
 import com.revature.tixter.models.Tickets;
-import com.revature.tixter.models.Users;
-import com.revature.tixter.util.ConnectionFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
@@ -22,7 +19,7 @@ public class TicketDAO implements CrudDAO {
             String sql = "insert into tickets (ticket_id, publisher_id, ticket_name) values ( ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, ticket.getTicket_id());
-            pstmt.setString(2, ticket.getPublisher().getUser_id());
+            pstmt.setString(2, ticket.getPublisher());
             pstmt.setString(3, ticket.getName());
 
             int rowsInserted = pstmt.executeUpdate();

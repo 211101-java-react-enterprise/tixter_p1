@@ -7,8 +7,7 @@ public class NewTicketRequest {
 
     private String name;
 
-    @JsonIgnore
-    private Users publisher;
+    private String publisher;
 
     public String getName() {
         return name;
@@ -18,11 +17,11 @@ public class NewTicketRequest {
         this.name = name;
     }
 
-    public Users getPublisher() {
+    public String getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(Users publisher) {
+    public void setPublisher() {
         this.publisher = publisher;
     }
 

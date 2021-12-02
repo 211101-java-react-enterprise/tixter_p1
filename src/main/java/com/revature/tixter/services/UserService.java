@@ -27,7 +27,7 @@ public class UserService {
     }
 
     //Register New Users
-    public boolean register(Users TempUser) {
+    public boolean register(Users TempUser) throws IllegalAccessException, InstantiationException {
 
         //first Check if Basic User Info Valid
         if (!isUserValid(TempUser))throw new InvalidRequestException("Invalid user data provided!");

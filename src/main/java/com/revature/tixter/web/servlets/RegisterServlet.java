@@ -42,6 +42,10 @@ public class RegisterServlet extends HttpServlet {
         } catch (JsonParseException e) {
             resp.setStatus(400); // client error; BAD REQUEST
             e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         }
     }
 

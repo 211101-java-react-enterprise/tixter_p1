@@ -48,7 +48,7 @@ public class TicketServlet extends HttpServlet {
             }
 
             NewTicketRequest newTicketRequest = mapper.readValue(request.getInputStream(), NewTicketRequest.class);
-            newTicketRequest.setPublisher((Users) authUserAttribute);
+//            newTicketRequest.setPublisher((Users) authUserAttribute);
 
             ticketService.createNewTicket(newTicketRequest);
 
@@ -73,25 +73,25 @@ public class TicketServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        resp.setContentType("application/json");
-
-        try {
-            AppUser newUser = mapper.readValue(req.getInputStream(), AppUser.class);
-            boolean wasRegistered = userService.registerNewUser(newUser);
-            if (wasRegistered) {
-                System.out.println("User successfully persisted!");
-                resp.setStatus(201);
-            } else {
-                System.out.println("Could not persist user! Check logs.");
-                resp.setStatus(500); // server error
-            }
-        } catch (JsonParseException e) {
-            resp.setStatus(400); // client error; BAD REQUEST
-            e.printStackTrace();
-        }
-
-    }
+//    @Override
+//    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//
+//        resp.setContentType("application/json");
+//
+//        try {
+//            AppUser newUser = mapper.readValue(req.getInputStream(), AppUser.class);
+//            boolean wasRegistered = userService.registerNewUser(newUser);
+//            if (wasRegistered) {
+//                System.out.println("User successfully persisted!");
+//                resp.setStatus(201);
+//            } else {
+//                System.out.println("Could not persist user! Check logs.");
+//                resp.setStatus(500); // server error
+//            }
+//        } catch (JsonParseException e) {
+//            resp.setStatus(400); // client error; BAD REQUEST
+//            e.printStackTrace();
+//        }
+//
+//    }
 }
