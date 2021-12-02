@@ -30,11 +30,11 @@ public class TicketService {
             throw new InvalidRequestException("Invalid ticket values provided!");
         }
 
-        Tickets newTicket = ticketDAO.save(ticket);
+//        Tickets newTicket = ticketDAO.save(ticket);
 
-        if (newTicket == null) {
-            throw new ResourcePersistenceException("The ticket could not be persisted to the datasource!");
-        }
+//        if (newTicket == null) {
+//            throw new ResourcePersistenceException("The ticket could not be persisted to the datasource!");
+//        }
 
     }
 

@@ -10,30 +10,30 @@ import java.util.UUID;
 
 public class TicketDAO implements CrudDAO {
 
-    public Tickets save(Tickets ticket) {
-
-        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-
-            ticket.setTicket_id(UUID.randomUUID().toString());
-
-            String sql = "insert into tickets (ticket_id, publisher_id, ticket_name) values ( ?, ?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, ticket.getTicket_id());
-            pstmt.setString(2, ticket.getPublisher());
-            pstmt.setString(3, ticket.getName());
-
-            int rowsInserted = pstmt.executeUpdate();
-
-            if (rowsInserted != 0) {
-                return ticket;
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
+//    public Tickets save(Tickets ticket) {
+//
+//        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+//
+//            ticket.setTicket_id(UUID.randomUUID().toString());
+//
+//            String sql = "insert into tickets (ticket_id, publisher_id, ticket_name) values ( ?, ?, ?)";
+//            PreparedStatement pstmt = conn.prepareStatement(sql);
+//            pstmt.setString(1, ticket.getTicket_id());
+//            pstmt.setString(2, ticket.getPublisher());
+//            pstmt.setString(3, ticket.getName());
+//
+//            int rowsInserted = pstmt.executeUpdate();
+//
+//            if (rowsInserted != 0) {
+//                return ticket;
+//            }
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return null;
+//    }
 
     @Override
     public Object save(Object newObj) {

@@ -45,8 +45,6 @@ public class UserDAO implements CrudDAO {
 //    public Users save(Users newUser) {
 //
 //        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-//            //Assign UUID to every tixter user
-//            newUser.setUser_id(UUID.randomUUID().toString());
 //            //prepare SQl statements
 //            String sql = "insert into tixter_users (user_id, firstname, lastname, email, password, user_age, type_id, role_id) " +
 //                    "values (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -98,16 +96,22 @@ public class UserDAO implements CrudDAO {
 //
 //    }
     public Users save(Users newUser) throws IllegalAccessException, InstantiationException {
-        return (Users) orm.creating(newUser);
+        //            //Assign UUID to every tixter user
+        newUser.setUser_id(UUID.randomUUID().toString());
+        return orm.creating(newUser);
 
     }
 
-    public Users findUserByEmailAndPassword(String email, String password) {
-
+    public Users findUserByEmailAndPassword(String email, String password) throws IllegalAccessException, InstantiationException {
+        Users authUser=findByEmail(email);
+        if(authUser.getPassword().equals(password)){
+            return authUser;
+        }
+        return null;
     }
 
     public Users findByEmail(String email) throws IllegalAccessException, InstantiationException {
-        return (Users) orm.reading(Users.class, email);
+        return orm.reading(Users.class, email);
     }
 
     @Override

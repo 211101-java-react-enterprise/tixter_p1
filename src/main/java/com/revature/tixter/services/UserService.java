@@ -38,11 +38,12 @@ public class UserService {
         }
         //Write new User Info to database
         Users newUser=userDAO.save(TempUser);
-
+        //Check if return User exist
+        if(newUser==null){return false;}
         return true;
     }
 
-    public Users authenticateUser(String email, String password) {
+    public Users authenticateUser(String email, String password) throws IllegalAccessException, InstantiationException {
 
         if (email == null || email.trim().equals("") || password == null || password.trim().equals("")) {
             throw new InvalidRequestException("Invalid credential values provided!");

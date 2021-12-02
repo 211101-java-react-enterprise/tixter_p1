@@ -31,6 +31,7 @@ public class RegisterServlet extends HttpServlet {
 
         try {
             Users newUser = objectMapper.readValue(req.getInputStream(), Users.class);
+            //System.out.println(newUser.getEmail()+": "+newUser.getFirstname());
             boolean wasRegistered = userService.register(newUser);
             if (wasRegistered) {
                 System.out.println("User successfully persisted!");
