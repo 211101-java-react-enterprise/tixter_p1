@@ -31,6 +31,7 @@ public class RegisterServlet extends HttpServlet {
 
         try {
             Users newUser = objectMapper.readValue(req.getInputStream(), Users.class);
+            //System.out.println(newUser.getEmail()+": "+newUser.getFirstname());
             boolean wasRegistered = userService.register(newUser);
             if (wasRegistered) {
                 System.out.println("User successfully persisted!");
@@ -42,6 +43,20 @@ public class RegisterServlet extends HttpServlet {
         } catch (JsonParseException e) {
             resp.setStatus(400); // client error; BAD REQUEST
             e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doGet(req, resp);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doDelete(req, resp);
     }
 }

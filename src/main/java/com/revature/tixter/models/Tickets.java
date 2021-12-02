@@ -1,14 +1,39 @@
 package com.revature.tixter.models;
 
+import com.revature.nimble.annotations.Column;
+import com.revature.nimble.annotations.Key;
+import com.revature.nimble.annotations.Table;
+import com.revature.tixter.models.Users;
+
+@Table(tableName = "tickets")
 public class Tickets {
+    @Key(keyName = "ticket_id")
     private String ticket_id;
+    @Column(columnName = "publisher_id")
     private String publisher;
+    @Column(columnName = "ticket_name")
     private String name;
+    @Column(columnName = "start_time")
     private String start_time;
+    @Column(columnName = "price")
     private double price;
+    @Column(columnName = "available")
     private boolean available;
+    @Column(columnName = "movie_id")
     private String movie_id;
 
+    public Tickets(String name) {
+        this.name = name;
+    }
+
+    public Tickets(String name, String publisher) {
+        this(name);
+        this.publisher = publisher;
+    }
+
+    public Tickets() {
+        super();
+    }
 
     //___________________________Getter Section_________________________________
     public String getTicket_id() {return ticket_id;}

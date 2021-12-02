@@ -63,12 +63,12 @@ create table prices(
 drop table if exists tickets;
 create table tickets(
 	ticket_id varchar check(ticket_id<> ''),
-	publisher varchar not null check(publisher<> ''),
+	publisher_id varchar not null check(publisher_id<> ''),
 	ticket_name varchar not null check(ticket_name <>''),
-	start_time timestamp not null,
+	start_time timestamp,
 	price int,
-	available int not null,
-	movie_id varchar not null,
+	available int,
+	movie_id varchar,
 
 	constraint tickets_pk
 	primary key (ticket_id),

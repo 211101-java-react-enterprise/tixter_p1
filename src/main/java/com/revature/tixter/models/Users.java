@@ -1,14 +1,27 @@
 package com.revature.tixter.models;
 
+import com.revature.nimble.annotations.Column;
+import com.revature.nimble.annotations.Key;
+import com.revature.nimble.annotations.Table;
+
+@Table(tableName = "tixter_users")
 public class Users {
-    private String user_id;
-    private String firstname;
-    private String lastname;
-    private String email;
-    private String password;
-    private int age;
-    private int type_id;
-    private int role_id;
+    @Column(columnName = "user_id")
+    public String user_id;
+    @Column(columnName = "firstname")
+    public String firstname;
+    @Column(columnName = "lastname")
+    public String lastname;
+    @Key(keyName = "email")
+    public String email;
+    @Column(columnName = "password")
+    public String password;
+    @Column(columnName = "user_age")
+    public int age;
+    @Column(columnName = "type_id")
+    public int type_id;
+    @Column(columnName = "role_id")
+    public int role_id;
 
     public Users(){}
 

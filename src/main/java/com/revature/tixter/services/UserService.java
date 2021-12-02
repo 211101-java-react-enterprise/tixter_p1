@@ -1,6 +1,7 @@
 package com.revature.tixter.services;
 
 import com.revature.tixter.daos.UserDAO;
+import com.revature.tixter.exceptions.AuthenticationException;
 import com.revature.tixter.exceptions.InvalidRequestException;
 import com.revature.tixter.exceptions.ResourcePersistenceException;
 import com.revature.tixter.models.Users;
@@ -26,7 +27,7 @@ public class UserService {
     }
 
     //Register New Users
-    public boolean register(Users TempUser) {
+    public boolean register(Users TempUser) throws IllegalAccessException, InstantiationException {
 
         //first Check if Basic User Info Valid
         if (!isUserValid(TempUser))throw new InvalidRequestException("Invalid user data provided!");
@@ -37,8 +38,24 @@ public class UserService {
         }
         //Write new User Info to database
         Users newUser=userDAO.save(TempUser);
-
+        //Check if return User exist
+        if(newUser==null){return false;}
         return true;
     }
 
+    public Users authenticateUser(String email, String password) throws IllegalAccessException, InstantiationException {
+
+        if (email == null || email.trim().equals("") || password == null || password.trim().equals("")) {
+            throw new InvalidRequestException("Invalid credential values provided!");
+        }
+
+        Users authenticatedUser = userDAO.findUserByEmailAndPassword(email, password);
+
+        if (authenticatedUser == null) {
+            throw new AuthenticationException();
+        }
+
+        return authenticatedUser;
+
+    }
 }
