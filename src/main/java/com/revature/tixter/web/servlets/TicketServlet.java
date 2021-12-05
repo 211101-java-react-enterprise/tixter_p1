@@ -3,12 +3,14 @@ package com.revature.tixter.web.servlets;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.tixter.daos.TicketDAO;
 import com.revature.tixter.exceptions.AuthenticationException;
 import com.revature.tixter.exceptions.InvalidRequestException;
+import com.revature.tixter.models.Tickets;
 import com.revature.tixter.models.Users;
 import com.revature.tixter.services.TicketService;
 import com.revature.tixter.web.dtos.ErrorResponse;
-import com.revature.tixter.web.dtos.NewTicketRequest;
+import com.revature.tixter.web.dtos.TicketRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -47,8 +49,9 @@ public class TicketServlet extends HttpServlet {
                 throw new InvalidRequestException("Unexpected type in session attribute");
             }
 
-            NewTicketRequest newTicketRequest = mapper.readValue(request.getInputStream(), NewTicketRequest.class);
-//            newTicketRequest.setPublisher((Users) authUserAttribute);
+            TicketRequest newTicketRequest = mapper.readValue(request.getInputStream(), TicketRequest.class);
+            Users session = (Users) authUserAttribute;
+            newTicketRequest.setPublisher(session.getUser_id()); // get user id and store as ticket publisher
 
             ticketService.createNewTicket(newTicketRequest);
 
@@ -73,25 +76,60 @@ public class TicketServlet extends HttpServlet {
         }
     }
 
-//    @Override
-//    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//
-//        resp.setContentType("application/json");
-//
-//        try {
-//            AppUser newUser = mapper.readValue(req.getInputStream(), AppUser.class);
-//            boolean wasRegistered = userService.registerNewUser(newUser);
-//            if (wasRegistered) {
-//                System.out.println("User successfully persisted!");
-//                resp.setStatus(201);
-//            } else {
-//                System.out.println("Could not persist user! Check logs.");
-//                resp.setStatus(500); // server error
-//            }
-//        } catch (JsonParseException e) {
-//            resp.setStatus(400); // client error; BAD REQUEST
-//            e.printStackTrace();
-//        }
-//
-//    }
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        TicketDAO ticketDAO = new TicketDAO();
+
+        resp.setContentType("application/json");
+
+        try {
+            String ticket_id = req.getParameter("ticket_id"); // 8080/ticket?ticket_id=
+            Tickets ticketExists = ticketDAO.findById(ticket_id);
+
+            if (ticketExists != null) {
+                ticketDAO.removeById(ticket_id);
+                System.out.println("Ticket successfully deleted!");
+                resp.setStatus(201);
+            } else {
+                System.out.println("Could not delete ticket! Check logs.");
+                resp.setStatus(500);
+            }
+        } catch (IllegalAccessException e) {
+            resp.setStatus(400);
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            resp.setStatus(400);
+            e.printStackTrace();
+        }
+
+    }
+
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        TicketDAO ticketDAO = new TicketDAO();
+
+        resp.setContentType("application/json");
+
+        try {
+            String ticket_id = req.getParameter("ticket_id"); // 8080/ticket?ticket_id=
+            Tickets ticketExists = ticketDAO.findById(ticket_id);
+
+            if (ticketExists != null || ticket_id != null) {
+                ticketService.updateTicketAvailability(ticket_id, 5); //hard coded value TODO: get new int
+                System.out.println("Ticket successfully updated!");
+                resp.setStatus(201);
+            } else {
+                System.out.println("Could not find ticket! Please end url with ?ticket_id=");
+                resp.setStatus(500);
+            }
+        } catch (IllegalAccessException e) {
+            resp.setStatus(400);
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            resp.setStatus(400);
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

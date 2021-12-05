@@ -48,12 +48,8 @@ create table movies(
 drop table if exists prices;
 create table prices(
 	price_id int,
-	regular_price decimal not null,
-	student_price decimal not null,
-	military_price decimal not null,
-	senior_price decimal not null,
-	discount_price decimal not null,
-	employee_price decimal not null,
+	name varchar not null,
+	price decimal not null,
 
 	constraint prices_pk
 	primary key (price_id)
@@ -96,3 +92,45 @@ create table user_tickets(
 	foreign key (ticket_id)
 	references tickets
 );
+
+insert into prices (price_id, name, price)
+values (0, 'Regular Price', 9.99),
+		(1, 'Student Price', .99),
+		( 2, 'Military Price', .99),
+		( 3, 'Senior Discount', .99),
+		( 4, 'Matinee Price', .99),
+		( 5, 'Employee Discount', .01)
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
