@@ -44,17 +44,17 @@ public class UserService {
     }
 
     public Users authenticateUser(String email, String password) throws IllegalAccessException, InstantiationException {
-
+        //check if user input equals null or empty string at first place
         if (email == null || email.trim().equals("") || password == null || password.trim().equals("")) {
             throw new InvalidRequestException("Invalid credential values provided!");
         }
-
+        //Utilize DAO to get an instance of User
         Users authenticatedUser = userDAO.findUserByEmailAndPassword(email, password);
-
+        //if DAO returns null instance, raise exception to tell client that email or password is wrong
         if (authenticatedUser == null) {
-            throw new AuthenticationException();
+            throw new AuthenticationException("Email or password was wrong");
         }
-
+        //otherwise, just return instance
         return authenticatedUser;
 
     }

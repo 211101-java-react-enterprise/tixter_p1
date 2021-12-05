@@ -91,6 +91,7 @@
                                 <exclude>com/revature/tixter/exceptions/*</exclude>
                                 <exclude>com/revature/tixter/web/servlets/*</exclude>
                                 <exclude>com/revature/tixter/web/util/*</exclude>
+                                <exclude>com/revature/tixter/web/dtos/*</exclude>
                             </excludes>
                         </configuration>
                     </execution>

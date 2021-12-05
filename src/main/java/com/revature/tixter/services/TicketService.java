@@ -21,7 +21,6 @@ public class TicketService {
     }
 
     public void createNewTicket(NewTicketRequest newTicketRequestRequest) {
-
         Tickets ticket = new Tickets();
         ticket.setName(newTicketRequestRequest.getName());
         ticket.setPublisher(newTicketRequestRequest.getPublisher());
