@@ -1,14 +1,16 @@
 package com.revature.tixter.services;
 
+import com.revature.nimble.OrmServiceDriver;
 import com.revature.tixter.daos.TicketDAO;
 import com.revature.tixter.exceptions.InvalidRequestException;
 import com.revature.tixter.exceptions.ResourcePersistenceException;
 import com.revature.tixter.models.Tickets;
-import com.revature.tixter.web.dtos.NewTicketRequest;
+import com.revature.tixter.web.dtos.TicketRequest;
 
 public class TicketService {
 
     private final TicketDAO ticketDAO;
+    private final OrmServiceDriver orm = new OrmServiceDriver();
 
     public TicketService(TicketDAO ticketDAO) {
         this.ticketDAO = ticketDAO;
@@ -20,22 +22,44 @@ public class TicketService {
         return true;
     }
 
-    public void createNewTicket(NewTicketRequest newTicketRequestRequest) {
+    public void createNewTicket(TicketRequest newTicketRequest) throws IllegalAccessException, InstantiationException {
 
         Tickets ticket = new Tickets();
-        ticket.setName(newTicketRequestRequest.getName());
-        ticket.setPublisher(newTicketRequestRequest.getPublisher());
+        ticket.setName(newTicketRequest.getName());
+        ticket.setPublisher(newTicketRequest.getPublisher());
+        ticket.setPrice(newTicketRequest.getPrice());
+        ticket.setAvailable(newTicketRequest.getAvailable());
+        ticket.setStart_time(newTicketRequest.getStart_time());
+        ticket.setMovie_id(newTicketRequest.getMovie_id());
 
         if (!isTicketValid(ticket)) {
             throw new InvalidRequestException("Invalid ticket values provided!");
         }
 
-//        Tickets newTicket = ticketDAO.save(ticket);
+        Tickets newTicket = ticketDAO.save(ticket);
 
-//        if (newTicket == null) {
-//            throw new ResourcePersistenceException("The ticket could not be persisted to the datasource!");
-//        }
+        if (newTicket == null) {
+            throw new ResourcePersistenceException("The ticket could not be persisted to the datasource!");
+        }
 
+    }
+
+    public boolean updateTicketAvailability(String id, int newAvail) throws IllegalAccessException, InstantiationException, NoSuchFieldException {
+
+        if (newAvail<0) {
+            throw new InvalidRequestException("Please enter an availability number greater or equal to 0!");
+        }
+
+        return orm.update(Tickets.class,id,Tickets.class.getField("available"), newAvail);
+
+    }
+
+    public Tickets findByTicketId(String id) throws IllegalAccessException, InstantiationException {
+        if (id == null || id.equals("")) {
+            throw new InvalidRequestException("Invalid ticket id provided!");
+        }
+
+        return ticketDAO.findById(id);
     }
 
 }

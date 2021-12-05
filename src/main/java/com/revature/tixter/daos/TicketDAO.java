@@ -1,6 +1,8 @@
 package com.revature.tixter.daos;
 
+import com.revature.nimble.OrmServiceDriver;
 import com.revature.tixter.models.Tickets;
+import com.revature.tixter.models.Users;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class TicketDAO implements CrudDAO {
+    OrmServiceDriver orm = new OrmServiceDriver();
 
 //    public Tickets save(Tickets ticket) {
 //
@@ -35,6 +38,25 @@ public class TicketDAO implements CrudDAO {
 //        return null;
 //    }
 
+    public Tickets save(Tickets newTicket) throws IllegalAccessException, InstantiationException {
+        newTicket.setTicket_id(UUID.randomUUID().toString());
+        return orm.creating(newTicket);
+
+    }
+
+    public Tickets update(Tickets newTicket ) {
+//        return orm.update();
+        return null;
+    }
+
+    public Tickets findById(String id) throws IllegalAccessException, InstantiationException {
+        return orm.reading(Tickets.class, id);
+    }
+
+    public boolean removeById(String id) {
+        return orm.delete(Tickets.class, id);
+    }
+
     @Override
     public Object save(Object newObj) {
         return null;
@@ -46,17 +68,12 @@ public class TicketDAO implements CrudDAO {
     }
 
     @Override
-    public Object findById(String id) {
-        return null;
-    }
-
-    @Override
     public boolean update(Object updatedObj) {
         return false;
     }
 
-    @Override
-    public boolean removeById(String id) {
-        return false;
-    }
+//    @Override
+//    public boolean removeById(String id) {
+//        return false;
+//    }
 }
