@@ -50,7 +50,9 @@ public class TicketService {
             throw new InvalidRequestException("Please enter an availability number greater or equal to 0!");
         }
 
-        return orm.update(Tickets.class,id,Tickets.class.getField("available"), newAvail);
+        boolean update = ticketDAO.updateAvailability(id, newAvail);
+
+        return update;
 
     }
 
@@ -62,4 +64,7 @@ public class TicketService {
         return ticketDAO.findById(id);
     }
 
+    public boolean removeById(String ticket_id) {
+        return ticketDAO.removeById(ticket_id);
+    }
 }

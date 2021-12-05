@@ -87,12 +87,12 @@ public class TicketServlet extends HttpServlet {
             Tickets ticketExists = ticketDAO.findById(ticket_id);
 
             if (ticketExists != null) {
-                ticketDAO.removeById(ticket_id);
+                ticketService.removeById(ticket_id);
                 System.out.println("Ticket successfully deleted!");
-                resp.setStatus(201);
+                resp.setStatus(200);
             } else {
                 System.out.println("Could not delete ticket! Check logs.");
-                resp.setStatus(500);
+                resp.setStatus(400);
             }
         } catch (IllegalAccessException e) {
             resp.setStatus(400);

@@ -57,6 +57,8 @@ public class TicketDAO implements CrudDAO {
         return orm.delete(Tickets.class, id);
     }
 
+
+
     @Override
     public Object save(Object newObj) {
         return null;
@@ -70,6 +72,10 @@ public class TicketDAO implements CrudDAO {
     @Override
     public boolean update(Object updatedObj) {
         return false;
+    }
+
+    public boolean updateAvailability(String id, int newAvail) throws NoSuchFieldException {
+        return orm.update(Tickets.class,id,Tickets.class.getField("available"), newAvail);
     }
 
 //    @Override
