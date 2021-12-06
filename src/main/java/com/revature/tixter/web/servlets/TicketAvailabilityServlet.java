@@ -35,7 +35,7 @@ public class TicketAvailabilityServlet extends HttpServlet {
                 ticketService.updateTicketAvailability(ticket_id, newTicketRequest.getAvailable());
 
                 System.out.println("Ticket successfully updated!");
-                resp.setStatus(201);
+                resp.setStatus(200);
             } else {
                 System.out.println("Could not find ticket! Please end url with ?ticket_id=");
                 resp.setStatus(500);

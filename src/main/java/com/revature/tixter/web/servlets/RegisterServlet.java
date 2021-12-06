@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class RegisterServlet extends HttpServlet {
 
@@ -25,13 +24,10 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException{
-        PrintWriter respWriter=resp.getWriter();
         resp.setContentType("application/json");
-
 
         try {
             Users newUser = objectMapper.readValue(req.getInputStream(), Users.class);
-            //System.out.println(newUser.getEmail()+": "+newUser.getFirstname());
             boolean wasRegistered = userService.register(newUser);
             if (wasRegistered) {
                 System.out.println("User successfully persisted!");

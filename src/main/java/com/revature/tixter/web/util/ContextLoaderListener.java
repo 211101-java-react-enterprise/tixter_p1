@@ -35,8 +35,8 @@ public class ContextLoaderListener implements ServletContextListener {
         TicketAvailabilityServlet ticketAvailabilityServlet = new TicketAvailabilityServlet(ticketService,objectMapper);
 
         ServletContext context=sce.getServletContext();
-        context.addServlet("RegisterServlet",userServlet).addMapping("/register");
-        context.addServlet("LoginServlet",loginServlet).addMapping("/login");
+        context.addServlet("RegisterServlet",userServlet).addMapping("/users");
+        context.addServlet("LoginServlet",loginServlet).addMapping("/session");
         context.addServlet("TicketServlet", ticketServlet).addMapping("/tickets");
         context.addServlet("TicketAvailabilityServlet",ticketAvailabilityServlet).addMapping("/tickets/available");
 
