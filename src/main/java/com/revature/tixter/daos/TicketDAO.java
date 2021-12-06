@@ -7,6 +7,7 @@ import com.revature.tixter.models.Users;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,6 +54,11 @@ public class TicketDAO implements CrudDAO {
         return orm.reading(Tickets.class, id);
     }
 
+    public List<Tickets> findByPublisherId(String id) throws IllegalAccessException, InstantiationException, NoSuchFieldException {
+//        System.out.println(orm.reading(Tickets.class,Tickets.class.getField("publisher_id"), id));
+        return orm.reading(Tickets.class,Tickets.class.getField("publisher_id"), id);
+    }
+
     public boolean removeById(String id) {
         return orm.delete(Tickets.class, id);
     }
@@ -67,6 +73,10 @@ public class TicketDAO implements CrudDAO {
     @Override
     public List findAll() {
         return null;
+    }
+
+    public List findAllTickets() throws IllegalAccessException, InstantiationException {
+        return orm.reading(Tickets.class);
     }
 
     @Override

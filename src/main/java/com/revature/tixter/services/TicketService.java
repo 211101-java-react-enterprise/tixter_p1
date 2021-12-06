@@ -7,6 +7,11 @@ import com.revature.tixter.exceptions.ResourcePersistenceException;
 import com.revature.tixter.models.Tickets;
 import com.revature.tixter.web.dtos.TicketRequest;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class TicketService {
 
     private final TicketDAO ticketDAO;
@@ -66,5 +71,13 @@ public class TicketService {
 
     public boolean removeById(String ticket_id) {
         return ticketDAO.removeById(ticket_id);
+    }
+
+    public List<Tickets> findByUserId(String user_id) throws IllegalAccessException, InstantiationException, NoSuchFieldException {
+        return ticketDAO.findByPublisherId(user_id);
+    }
+
+    public List<Tickets> getAllTickets() throws IllegalAccessException, InstantiationException {
+        return ticketDAO.findAllTickets();
     }
 }
