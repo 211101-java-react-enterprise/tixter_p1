@@ -22,7 +22,7 @@ public class TicketService {
         return true;
     }
 
-    public void createNewTicket(TicketRequest newTicketRequest) throws IllegalAccessException, InstantiationException {
+    public boolean createNewTicket(TicketRequest newTicketRequest) throws IllegalAccessException, InstantiationException {
 
         Tickets ticket = new Tickets();
         ticket.setName(newTicketRequest.getName());
@@ -41,7 +41,7 @@ public class TicketService {
         if (newTicket == null) {
             throw new ResourcePersistenceException("The ticket could not be persisted to the datasource!");
         }
-
+        return true;
     }
 
     public boolean updateTicketAvailability(String id, int newAvail) throws IllegalAccessException, InstantiationException, NoSuchFieldException {
