@@ -29,11 +29,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.2.12</version>
-        </dependency>
-        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.1</version>
@@ -48,6 +43,13 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.revature</groupId>
+            <artifactId>nimble</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
     <build>
         <pluginManagement>
@@ -89,6 +91,7 @@
                                 <exclude>com/revature/tixter/exceptions/*</exclude>
                                 <exclude>com/revature/tixter/web/servlets/*</exclude>
                                 <exclude>com/revature/tixter/web/util/*</exclude>
+                                <exclude>com/revature/tixter/web/dtos/*</exclude>
                             </excludes>
                         </configuration>
                     </execution>

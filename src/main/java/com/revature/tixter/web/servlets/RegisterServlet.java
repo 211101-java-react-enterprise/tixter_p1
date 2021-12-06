@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class RegisterServlet extends HttpServlet {
 
@@ -25,9 +24,7 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException{
-        PrintWriter respWriter=resp.getWriter();
         resp.setContentType("application/json");
-
 
         try {
             Users newUser = objectMapper.readValue(req.getInputStream(), Users.class);
@@ -42,6 +39,20 @@ public class RegisterServlet extends HttpServlet {
         } catch (JsonParseException e) {
             resp.setStatus(400); // client error; BAD REQUEST
             e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doGet(req, resp);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doDelete(req, resp);
     }
 }

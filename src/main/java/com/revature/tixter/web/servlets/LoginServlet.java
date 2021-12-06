@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("authUser", authUser); //sets cookie
 
-            resp.setStatus(204);
+            resp.setStatus(200);
         } catch (InvalidRequestException | UnrecognizedPropertyException e) {
             resp.setStatus(400);
         } catch (AuthenticationException e) {
