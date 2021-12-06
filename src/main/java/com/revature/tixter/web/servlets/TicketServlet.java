@@ -104,32 +104,5 @@ public class TicketServlet extends HttpServlet {
 
     }
 
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        TicketDAO ticketDAO = new TicketDAO();
 
-        resp.setContentType("application/json");
-
-        try {
-            String ticket_id = req.getParameter("ticket_id"); // 8080/ticket?ticket_id=
-            Tickets ticketExists = ticketDAO.findById(ticket_id);
-
-            if (ticketExists != null || ticket_id != null) {
-                ticketService.updateTicketAvailability(ticket_id, 5); //hard coded value TODO: get new int
-                System.out.println("Ticket successfully updated!");
-                resp.setStatus(201);
-            } else {
-                System.out.println("Could not find ticket! Please end url with ?ticket_id=");
-                resp.setStatus(500);
-            }
-        } catch (IllegalAccessException e) {
-            resp.setStatus(400);
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            resp.setStatus(400);
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-
-    }
 }
