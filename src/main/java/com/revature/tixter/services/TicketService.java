@@ -7,10 +7,7 @@ import com.revature.tixter.exceptions.ResourcePersistenceException;
 import com.revature.tixter.models.Tickets;
 import com.revature.tixter.web.dtos.TicketRequest;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TicketService {
 
@@ -31,7 +28,7 @@ public class TicketService {
 
         Tickets ticket = new Tickets();
         ticket.setName(newTicketRequest.getName());
-        ticket.setPublisher(newTicketRequest.getPublisher());
+        ticket.setPublisher_id(newTicketRequest.getPublisher());
         ticket.setPrice(newTicketRequest.getPrice());
         ticket.setAvailable(newTicketRequest.getAvailable());
         ticket.setStart_time(newTicketRequest.getStart_time());

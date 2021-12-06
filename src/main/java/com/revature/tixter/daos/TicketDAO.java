@@ -2,12 +2,7 @@ package com.revature.tixter.daos;
 
 import com.revature.nimble.OrmServiceDriver;
 import com.revature.tixter.models.Tickets;
-import com.revature.tixter.models.Users;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,8 +57,6 @@ public class TicketDAO implements CrudDAO {
     public boolean removeById(String id) {
         return orm.delete(Tickets.class, id);
     }
-
-
 
     @Override
     public Object save(Object newObj) {
