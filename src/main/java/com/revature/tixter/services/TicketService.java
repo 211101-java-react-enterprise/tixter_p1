@@ -7,6 +7,8 @@ import com.revature.tixter.exceptions.ResourcePersistenceException;
 import com.revature.tixter.models.Tickets;
 import com.revature.tixter.web.dtos.TicketRequest;
 
+import java.util.List;
+
 public class TicketService {
 
     private final TicketDAO ticketDAO;
@@ -26,7 +28,7 @@ public class TicketService {
 
         Tickets ticket = new Tickets();
         ticket.setName(newTicketRequest.getName());
-        ticket.setPublisher(newTicketRequest.getPublisher());
+        ticket.setPublisher_id(newTicketRequest.getPublisher());
         ticket.setPrice(newTicketRequest.getPrice());
         ticket.setAvailable(newTicketRequest.getAvailable());
         ticket.setStart_time(newTicketRequest.getStart_time());
@@ -50,7 +52,9 @@ public class TicketService {
             throw new InvalidRequestException("Please enter an availability number greater or equal to 0!");
         }
 
-        return orm.update(Tickets.class,id,Tickets.class.getField("available"), newAvail);
+        boolean update = ticketDAO.updateAvailability(id, newAvail);
+
+        return update;
 
     }
 
@@ -62,4 +66,15 @@ public class TicketService {
         return ticketDAO.findById(id);
     }
 
+    public boolean removeById(String ticket_id) {
+        return ticketDAO.removeById(ticket_id);
+    }
+
+    public List<Tickets> findByUserId(String user_id) throws IllegalAccessException, InstantiationException, NoSuchFieldException {
+        return ticketDAO.findByPublisherId(user_id);
+    }
+
+    public List<Tickets> getAllTickets() throws IllegalAccessException, InstantiationException {
+        return ticketDAO.findAllTickets();
+    }
 }

@@ -19,7 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class TicketServlet extends HttpServlet {
     private final TicketService ticketService;
@@ -28,6 +30,34 @@ public class TicketServlet extends HttpServlet {
     public TicketServlet(TicketService TicService, ObjectMapper mapper) {
         this.ticketService = TicService;
         this.mapper = mapper;
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        List<Tickets> ticketList = new ArrayList<>();
+
+        String user_id = req.getParameter("user_id"); // 8080/ticket?user_id=
+
+        try {
+            if (user_id != null) {
+                ticketList = ticketService.findByUserId(user_id);
+            } else ticketList = ticketService.getAllTickets();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+
+        if (ticketList.isEmpty()) {
+            resp.setStatus(404);
+            return;
+        }
+
+        String payload = mapper.writeValueAsString(ticketList);
+        resp.getWriter().write(payload);
     }
 
     @Override
@@ -79,7 +109,6 @@ public class TicketServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TicketDAO ticketDAO = new TicketDAO();
-
         resp.setContentType("application/json");
 
         try {
@@ -87,12 +116,12 @@ public class TicketServlet extends HttpServlet {
             Tickets ticketExists = ticketDAO.findById(ticket_id);
 
             if (ticketExists != null) {
-                ticketDAO.removeById(ticket_id);
+                ticketService.removeById(ticket_id);
                 System.out.println("Ticket successfully deleted!");
-                resp.setStatus(201);
+                resp.setStatus(200);
             } else {
                 System.out.println("Could not delete ticket! Check logs.");
-                resp.setStatus(500);
+                resp.setStatus(400);
             }
         } catch (IllegalAccessException e) {
             resp.setStatus(400);
@@ -104,32 +133,5 @@ public class TicketServlet extends HttpServlet {
 
     }
 
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        TicketDAO ticketDAO = new TicketDAO();
 
-        resp.setContentType("application/json");
-
-        try {
-            String ticket_id = req.getParameter("ticket_id"); // 8080/ticket?ticket_id=
-            Tickets ticketExists = ticketDAO.findById(ticket_id);
-
-            if (ticketExists != null || ticket_id != null) {
-                ticketService.updateTicketAvailability(ticket_id, 5); //hard coded value TODO: get new int
-                System.out.println("Ticket successfully updated!");
-                resp.setStatus(201);
-            } else {
-                System.out.println("Could not find ticket! Please end url with ?ticket_id=");
-                resp.setStatus(500);
-            }
-        } catch (IllegalAccessException e) {
-            resp.setStatus(400);
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            resp.setStatus(400);
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-
-    }
 }

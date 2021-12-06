@@ -117,7 +117,35 @@ public class TicketServiceTest {
         }
     }
 
+    @Test
+    public void testRemoveById() {
+        when(orm.delete(Tickets.class,"abc")).thenReturn(true);
+        boolean result = sut.removeById("abc");
 
+        Assert.assertTrue(result);
+        verify(orm,times(1)).delete(Tickets.class,"abc");
+    }
 
+    @Test(expected = InvalidRequestException.class)
+    public void testInvalidTicketAvailabilityUpdate() throws NoSuchFieldException, IllegalAccessException, InstantiationException {
+        sut.updateTicketAvailability("test",-1);
+    }
 
+    @Test
+    public void testFindByUserId() throws IllegalAccessException, InstantiationException, NoSuchFieldException {
+        when(orm.reading(Tickets.class,"abc")).thenReturn(null);
+        boolean result = sut.findByUserId("abc") == null;
+
+        Assert.assertFalse(result);
+//        verify(orm,times(1)).reading(Tickets.class,"abc");
+    }
+
+    @Test
+    public void testGetAllTickets() throws IllegalAccessException, InstantiationException, NoSuchFieldException {
+        when(orm.reading(Tickets.class)).thenReturn(null);
+        boolean result = sut.getAllTickets() == null;
+
+        Assert.assertTrue(result);
+        verify(orm,times(1)).reading(Tickets.class);
+    }
 }
