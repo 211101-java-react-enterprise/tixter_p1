@@ -9,6 +9,9 @@ import java.util.UUID;
 public class TicketDAO implements CrudDAO {
     OrmServiceDriver orm = new OrmServiceDriver();
 
+    public TicketDAO(){}
+    public TicketDAO(OrmServiceDriver orm) {this.orm=orm;}
+
 //    public Tickets save(Tickets ticket) {
 //
 //        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
